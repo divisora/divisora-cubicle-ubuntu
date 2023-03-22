@@ -1,0 +1,12 @@
+[Unit]
+Description=Joining FreeIPA
+After=local-fs.target
+After=network.target
+
+[Service]
+ExecStart=/opt/join_freeipa.sh
+RemainAfterExit=true
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target

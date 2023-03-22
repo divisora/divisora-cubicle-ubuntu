@@ -1,0 +1,7 @@
+[Unit]
+Description=Daemon for each XVNC connection
+
+[Service]
+ExecStart=-/usr/bin/Xvnc -desktop "XFCE" -inetd -query localhost -rfbport 5900 -SecurityTypes None -NeverShared -SendCutText -AcceptCutText -CompareFB 1 -ZlibLevel 6 -FrameRate 30 -Log *:stderr:100 -IdleTimeout=3600
+User=nobody
+StandardInput=socket
