@@ -26,6 +26,9 @@ RUN apt install -y firefox-esr
 
 COPY etc /etc/
 COPY opt /opt/
+
+RUN adduser xvnc --gecos "" --shell=/usr/sbin/nologin --no-create-home --disabled-password
+
 RUN chmod 644 /etc/systemd/system/xvnc.socket
 RUN chmod 644 /etc/systemd/system/xvnc@.service
 RUN chmod 644 /etc/systemd/system/freeipa.service
@@ -34,6 +37,7 @@ RUN systemctl enable freeipa.service
 
 RUN rm -rf /var/lib/apt/lists/*
 RUN apt clean
+
 
 LABEL se.domain.app-type="user"
 

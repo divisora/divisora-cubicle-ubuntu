@@ -2,6 +2,10 @@
 Description=Daemon for each XVNC connection
 
 [Service]
-ExecStart=-/usr/bin/Xvnc -desktop "XFCE" -inetd -query localhost -rfbport 5900 -SecurityTypes None -NeverShared -SendCutText -AcceptCutText -CompareFB 1 -ZlibLevel 6 -FrameRate 30 -Log *:stderr:100 -IdleTimeout=3600
-User=nobody
+# noVNC do not support SecurityTypes with encryption
+# https://github.com/novnc/noVNC/issues/1230
+# Also, X509-arguments cannot be added with -Argument [value] syntax for some reason. Argument=[value] works though.
+# ExecStart=-/usr/bin/Xvnc -desktop %H -inetd -query localhost -rfbport 5900 SecurityTypes=X509None X509Cert=/etc/ssl/certs/%H/%H.crt X509Key=/etc/ssl/private/%H/%H.key -NeverShared -SendCutText -AcceptCutText -CompareFB 1 -ZlibLevel 1 -FrameRate 30 -Log *:stderr:100 -IdleTimeout=3600
+ExecStart=-/usr/bin/Xvnc -desktop %H -inetd -query localhost -rfbport 5900 -SecurityTypes None -NeverShared -SendCutText -AcceptCutText -CompareFB 1 -ZlibLevel 1 -FrameRate 30 -Log *:stderr:100 -IdleTimeout=3600
+User=xvnc
 StandardInput=socket
